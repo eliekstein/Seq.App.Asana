@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 
 namespace Seq.App.Asana
 {
+    [SeqApp("Asana Task Creator", 
+        Description = "Creates tasks for matching events.")]
     public class AsanaReactor : Reactor, ISubscribeTo<LogEventData>
     {
         private static readonly Regex PlaceholdersRegex = new Regex("(\\[(?<key>[^\\[\\]]+?)(\\:(?<format>[^\\[\\]]+?))?\\])", RegexOptions.CultureInvariant | RegexOptions.Compiled);
