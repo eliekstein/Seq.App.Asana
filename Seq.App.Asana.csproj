@@ -52,11 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsanaBaseObject.cs" />
     <Compile Include="AsanaProject.cs" />
     <Compile Include="AsanaReactor.cs" />
     <Compile Include="AsanaTask.cs" />
+    <Compile Include="AsanaUser.cs" />
     <Compile Include="AsanaWorkspace.cs" />
     <Compile Include="Authentication.cs" />
+    <Compile Include="IAsanaObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@ namespace Seq.App.Asana
 
         [SeqAppSetting(
             DisplayName = "Personal Access Token",
+            InputType = SettingInputType.Password,
             HelpText = "Used for authenticating with asana. go here to find out how to get a Personal Access Token",
         IsOptional = false)]
         public string AccessToken { get; set; }

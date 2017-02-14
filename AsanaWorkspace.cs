@@ -5,32 +5,28 @@ using System.Net.Http.Headers;
 
 namespace Seq.App.Asana
 {
-    public class AsanaWorkspace
+    public class AsanaWorkspace : AsanaBaseObject<string>
     {
-        public string id { get; set; }
+        public override string id { get; set; }
         public string name { get; set; }
         public bool is_organization { get; set; }
+        public override string endpoint { get { return "workspaces"; } }
 
-        private const string endpoint = "workspaces";
+        //public T Retreive<T>(string workspaceId,Authentication authentication) where T : IAsanaObject<string>
+        //{
+        //    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        //    using (var cli = new HttpClient())
+        //    {
+        //        cli.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.AccessToken);
+        //        var uri = string.Format("https://app.asana.com/api/1.0/{0}/{1}", endpoint, workspaceId);
 
-        public AsanaWorkspace Retreive(string workspaceId,Authentication authentication)
-        {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            using (var cli = new HttpClient())
-            {
-                cli.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.AccessToken);
+        //        var strrsp = cli.GetStringAsync(uri).Result;
+        //        var j = JObject.Parse(strrsp);
 
-                var uri = string.Format("https://app.asana.com/api/1.0/{0}/{1}", endpoint, workspaceId);
+        //        var jobj = j.First.First.ToObject<T>();
 
-                var resp = cli.GetAsync(uri).Result;
-
-                var strrsp = resp.Content.ReadAsStringAsync().Result;
-                var j = JObject.Parse(strrsp);
-
-                var jobj = j.First.First.ToObject<AsanaWorkspace>();
-
-                return jobj;
-            }
-        }
+        //        return jobj;
+        //    }
+        //}
     }
 }
