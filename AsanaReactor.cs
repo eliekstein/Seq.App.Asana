@@ -40,7 +40,7 @@ namespace Seq.App.Asana
         [SeqAppSetting(
             DisplayName = "Suppression time (minutes)",
             IsOptional = true,
-            HelpText = "Once an event type has been sent to Slack, the time to wait before sending again. The default is zero.")]
+            HelpText = "Once an event type has been sent to asana, the time to wait before sending again. The default is zero.")]
         public int SuppressionMinutes { get; set; } = 0;
 
         [SeqAppSetting(
@@ -48,16 +48,6 @@ namespace Seq.App.Asana
             IsOptional = true,
             HelpText = "Should the event include the property information as attachments to the message. The default is to include")]
         public bool ExcludePropertyInformation { get; set; }
-
-        [SeqAppSetting(
-            HelpText = "The message template to use when writing the message to Slack. Refer to https://api.slack.com/docs/formatting for formatting options. Event property values can be added in the format [PropertyKey]. The default is \"[RenderedMessage]\"",
-            IsOptional = true)]
-        public string MessageTemplate { get; set; }
-
-        [SeqAppSetting(
-            HelpText = "The image to show in the room for the message. The default is https://getseq.net/images/nuget/seq.png",
-            IsOptional = true)]
-        public string IconUrl { get; set; }
 
         #endregion
 
