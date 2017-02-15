@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seq.App.Asana", "Seq.App.Asana.csproj", "{B2AE3D77-6EBE-4971-ACE7-4200A32B07DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seq.App.Asana", "Seq.App.Asana\Seq.App.Asana.csproj", "{B2AE3D77-6EBE-4971-ACE7-4200A32B07DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seq.App.Asana.Test", "..\Seq.App.Asana.Test\Seq.App.Asana.Test.csproj", "{6E3E90AE-C694-444A-945D-1966E871EBB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seq.App.Asana.Test", "Seq.App.Asana.Test\Seq.App.Asana.Test.csproj", "{6E3E90AE-C694-444A-945D-1966E871EBB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
