@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Seq.App.Asana
+﻿namespace Seq.App.Asana
 {
     public class AsanaProject : AsanaBaseObject<string>
     {

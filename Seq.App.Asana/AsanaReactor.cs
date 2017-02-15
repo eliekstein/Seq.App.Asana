@@ -35,7 +35,7 @@ namespace Seq.App.Asana
         [SeqAppSetting(
             DisplayName = "Assignee",
             IsOptional = true,
-            HelpText = "The username that Seq uses when posting to Slack. If not specified, uses the Webhook default. Username can also be a PropertyKey in the format [PropertyKey].")]
+            HelpText = "The user to get this task assigned to.")]
         public string Assignee { get; set; }
 
         [SeqAppSetting(
@@ -50,11 +50,34 @@ namespace Seq.App.Asana
             HelpText = "Should the event include the property information as attachments to the message. The default is to include")]
         public bool ExcludePropertyInformation { get; set; }
 
+        public string TaskName { get; set; }
+
+
         #endregion
 
         public void On(Event<LogEventData> evt)
         {
-            throw new NotImplementedException();
+            //get authentication
+            var auth = new Authentication(AccessToken);
+            //get workspace
+            var workspace = AsanaWorkspace.Retreive<AsanaWorkspace>(Workspace,auth);
+            //get project
+            AsanaProject project = null;
+            if (!string.IsNullOrEmpty(Project))
+                project = AsanaProject.Retreive<AsanaProject>(Project, auth);
+            //get assignee
+            var assignee = AsanaUser.Retreive<AsanaUser>(Assignee, auth);
+
+            var task = new AsanaTask
+            {
+                workspace = workspace,
+                projects = new[] { project },
+                assignee = assignee,
+                name = TaskName,
+                notes = evt.Data.RenderedMessage,
+            };
+
+            task.Create(auth);
         }
     }
 }

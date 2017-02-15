@@ -60,6 +60,7 @@
     <Compile Include="AsanaWorkspace.cs" />
     <Compile Include="Authentication.cs" />
     <Compile Include="IAsanaObject.cs" />
+    <Compile Include="IdOnlyConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace Seq.App.Asana
         TId id { get; set; }
         string endpoint { get; }
 
-        T Retreive<T>(TId id,Authentication authentication) where T : IAsanaObject<TId>;
+        //T Retreive<T>(TId id,Authentication authentication) where T : IAsanaObject<TId>;
 
     }
 }

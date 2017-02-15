@@ -1,36 +1,70 @@
-﻿using Seq.App.Asana;
-using Xunit;
+﻿using Xunit;
 
 namespace Seq.App.Asana.Test
 {
     public class AsanaUnitTest
     {
-        [Fact]
-        public void ShouldGetWorkspace()
+        #region Properties
+        private readonly Authentication authentication;
+        #endregion
+
+        #region Constructors
+
+        public AsanaUnitTest()
         {
-            AsanaWorkspace sut = new AsanaWorkspace().Retreive< AsanaWorkspace>("41019370781762", new Authentication("0/2d8427f251f20af1861db5e69cdf5e9d")) as AsanaWorkspace;
+            this.authentication = new Authentication("0/21dddb4169beda03b25295fe859235d9");
+        }
+
+        #endregion
+
+        #region Unit Tests
+
+        [Theory]
+        [InlineData("41019370781762")]
+        public void ShouldGetWorkspace(string workspaceId)
+        {
+            var sut = AsanaWorkspace.Retreive<AsanaWorkspace>(workspaceId, authentication);
 
             Assert.Equal("jafgifts.com", sut.name);
-
         }
-        [Fact]
-        public void ShouldGetProject()
+        [Theory]
+        [InlineData("187522734289958")]
+        public void ShouldGetProject(string projectId)
         {
-
-            var sut = new AsanaProject().Retreive<AsanaProject>("187522734289958", new Authentication("0/2d8427f251f20af1861db5e69cdf5e9d"));
+            var sut = AsanaProject.Retreive<AsanaProject>(projectId, authentication);
 
             Assert.Equal("EasyPost Implementation", sut.name);
-
-
         }
-        [Fact]
-        public void ShouldGetTask()
+        [Theory]
+        [InlineData("224577326177397")]
+        public void ShouldGetTask(string taskId)
         {
-
-            var sut = new AsanaTask().Retreive<AsanaTask>("224577326177397", new Authentication("0/2d8427f251f20af1861db5e69cdf5e9d"));
+            var sut = AsanaTask.Retreive<AsanaTask>(taskId, authentication);
 
             Assert.Equal("Manifest print out", sut.name);
             Assert.Equal("Eli Ekstein", sut.assignee.name);
         }
+
+        [Theory]
+        [InlineData("41019368881164")]
+        public void ShouldGetUser(string userId)
+        {
+            var sut = AsanaUser.Retreive<AsanaUser>(userId, authentication);
+
+            Assert.Equal("Eli Ekstein", sut.name);
+        }
+
+        [Fact]
+        public void ShouldCreateTask()
+        {
+            var sut = new AsanaTask
+            {
+                workspace = new AsanaWorkspace { id = "41019370781762" },
+                name = "Test new proj",
+            };
+
+            sut.Create(authentication);
+        }
+        #endregion
     }
 }
