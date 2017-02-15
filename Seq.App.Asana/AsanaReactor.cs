@@ -1,6 +1,5 @@
 ﻿using Seq.Apps;
 using Seq.Apps.LogEvents;
-using System;
 using System.Text.RegularExpressions;
 
 namespace Seq.App.Asana
@@ -50,6 +49,10 @@ namespace Seq.App.Asana
             HelpText = "Should the event include the property information as attachments to the message. The default is to include")]
         public bool ExcludePropertyInformation { get; set; }
 
+        [SeqAppSetting(
+            DisplayName = nameof(TaskName),
+            IsOptional = true,
+            HelpText = "The name of the task to be created, by default will be the first 30 characters of the rendered message.")]
         public string TaskName { get; set; }
 
 
@@ -73,7 +76,7 @@ namespace Seq.App.Asana
                 workspace = workspace,
                 projects = new[] { project },
                 assignee = assignee,
-                name = TaskName,
+                name = evt.Data.RenderedMessage.Substring(0,30),
                 notes = evt.Data.RenderedMessage,
             };
 
