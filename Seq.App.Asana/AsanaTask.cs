@@ -10,7 +10,6 @@ namespace Seq.App.Asana
         public string name { get; set; }
         public string notes { get; set; }
         public IEnumerable<AsanaProject> projects { get; set; }
-        [JsonConverter(typeof(IdOnlyConverter))]
         public AsanaWorkspace workspace { get; set; }
 
         public override string endpoint { get { return "tasks"; } }
