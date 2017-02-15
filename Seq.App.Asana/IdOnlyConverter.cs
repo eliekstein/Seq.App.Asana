@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Seq.App.Asana
 {
@@ -25,18 +27,16 @@ namespace Seq.App.Asana
         {
             JToken t = JToken.FromObject(value);
 
-            if (t.Type != JTokenType.Object)
+            if (t.Type == JTokenType.Array)
             {
-                t.WriteTo(writer);
+                var col = (IEnumerable<object>)value;
+                var strCol = col.Select(c => c.ToString());
+
+                writer.WriteValue(string.Join(",", strCol));
             }
             else
             {
-                JObject o = (JObject)t;
-                IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
-
-                o.AddFirst(new JProperty("Keys", new JArray(propertyNames)));
-
-                o.WriteTo(writer);
+                writer.WriteValue(value.ToString());
             }
 
         }

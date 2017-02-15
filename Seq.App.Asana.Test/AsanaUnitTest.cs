@@ -61,6 +61,7 @@ namespace Seq.App.Asana.Test
             {
                 workspace = new AsanaWorkspace { id = "41019370781762" },
                 name = "Test new proj",
+                projects = new[] {new AsanaProject { id = "187522734289958" } }
             };
 
             sut.Create(authentication);

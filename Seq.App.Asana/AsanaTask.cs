@@ -9,7 +9,9 @@ namespace Seq.App.Asana
         public AsanaUser assignee { get; set; }
         public string name { get; set; }
         public string notes { get; set; }
+        [JsonConverter(typeof(IdOnlyConverter))]
         public IEnumerable<AsanaProject> projects { get; set; }
+        [JsonConverter(typeof(IdOnlyConverter))]
         public AsanaWorkspace workspace { get; set; }
 
         public override string endpoint { get { return "tasks"; } }

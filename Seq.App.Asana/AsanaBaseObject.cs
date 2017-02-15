@@ -18,6 +18,7 @@ namespace Seq.App.Asana
                 return j.First.First.ToObject(t);
             };
         }
+        [JsonIgnore]
         public abstract string endpoint { get; }
         public abstract TId id { get; set; }
         [JsonIgnore]
@@ -47,12 +48,18 @@ namespace Seq.App.Asana
                 cli.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.AccessToken);
                 var uri = string.Format("https://app.asana.com/api/1.0/{0}", endpoint);
 
-                var jobj = JObject.FromObject(this, new JsonSerializer { NullValueHandling = NullValueHandling.Ignore });
+                var obj = new { data = this };
+
+                var jobj = JObject.FromObject(obj, new JsonSerializer { NullValueHandling = NullValueHandling.Ignore });
 
                 var objStr = jobj.ToString();
 
+
                 var content = new StringContent(objStr);
-                var responseStr = cli.PostAsync(uri, content).Result;
+                var response = cli.PostAsync(uri, content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                    throw new WebException("Not success");
             }
         }
     }

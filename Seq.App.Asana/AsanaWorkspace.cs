@@ -12,6 +12,9 @@ namespace Seq.App.Asana
         public string name { get; set; }
         public bool is_organization { get; set; }
         public override string endpoint { get { return "workspaces"; } }
-
+        public override string ToString()
+        {
+            return id;
+        }
     }
 }
