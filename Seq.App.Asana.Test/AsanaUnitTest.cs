@@ -12,7 +12,7 @@ namespace Seq.App.Asana.Test
 
         public AsanaUnitTest()
         {
-            this.authentication = new Authentication("0/21dddb4169beda03b25295fe859235d9");
+            this.authentication = new Authentication("0/3e7abde9b7de18d2845f2f511090f59e");
         }
 
         #endregion

@@ -1,14 +1,15 @@
 ﻿<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Seq.App.Asana</id>
-    <version>0.0.4-rc1</version>
+    <version>0.0.4</version>
     <authors>Eli Ekstein</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An app for Seq (http://getseq.net) that forwards messages to Asana.</description>
     <language>en-US</language>
     <projectUrl>https://github.com/eliekstein/Seq.App.Asana</projectUrl>
-    <!--<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-    <iconUrl>http://cdn.appstorm.net/web.appstorm.net/web/files/2013/10/slack_icon.png</iconUrl>-->
+    <!--<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>-->
+    <!--<iconUrl>https://d1gwm4cf8hecp4.cloudfront.net/images/favicons/apple-touch-icon.png</iconUrl>-->
+    <iconUrl>https://luna1.co/237196.png</iconUrl>
     <tags>seq-app seq serilog events Asana</tags>
   </metadata>
   <files>

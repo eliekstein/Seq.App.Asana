@@ -1,5 +1,8 @@
 ﻿using Seq.Apps;
 using Seq.Apps.LogEvents;
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Seq.App.Asana
@@ -9,7 +12,8 @@ namespace Seq.App.Asana
     public class AsanaReactor : Reactor, ISubscribeTo<LogEventData>
     {
         private static readonly Regex PlaceholdersRegex = new Regex("(\\[(?<key>[^\\[\\]]+?)(\\:(?<format>[^\\[\\]]+?))?\\])", RegexOptions.CultureInvariant | RegexOptions.Compiled);
-       
+        private readonly ConcurrentDictionary<uint, DateTime> _lastSeen = new ConcurrentDictionary<uint, DateTime>();
+
         #region Public Properties
 
         [SeqAppSetting(
@@ -43,23 +47,24 @@ namespace Seq.App.Asana
             HelpText = "Once an event type has been sent to asana, the time to wait before sending again. The default is zero.")]
         public int SuppressionMinutes { get; set; } = 0;
 
-        [SeqAppSetting(
-            DisplayName = "Exclude Properties",
-            IsOptional = true,
-            HelpText = "Should the event include the property information as attachments to the message. The default is to include")]
-        public bool ExcludePropertyInformation { get; set; }
-
-        [SeqAppSetting(
-            DisplayName = nameof(TaskName),
-            IsOptional = true,
-            HelpText = "The name of the task to be created, by default will be the first 30 characters of the rendered message.")]
-        public string TaskName { get; set; }
-
+        //[SeqAppSetting(
+        //    DisplayName = nameof(TaskName),
+        //    IsOptional = true,
+        //    HelpText = "The name of the task to be created, by default will be the first 30 characters of the rendered message.")]
+        //public string TaskName { get; set; }
 
         #endregion
 
         public void On(Event<LogEventData> evt)
         {
+            bool added = false;
+            var lastSeen = _lastSeen.GetOrAdd(evt.EventType, k => { added = true; return DateTime.UtcNow; });
+            if (!added)
+            {
+                if (lastSeen > DateTime.UtcNow.AddMinutes(-SuppressionMinutes)) return;
+                _lastSeen[evt.EventType] = DateTime.UtcNow;
+            }
+
             //get authentication
             var auth = new Authentication(AccessToken);
             //get workspace
@@ -69,18 +74,28 @@ namespace Seq.App.Asana
             if (!string.IsNullOrEmpty(Project))
                 project = AsanaProject.Retreive<AsanaProject>(Project, auth);
             //get assignee
-            var assignee = AsanaUser.Retreive<AsanaUser>(Assignee, auth);
+            AsanaUser assignee = null;
+            if(!string.IsNullOrEmpty(Assignee))
+                assignee = AsanaUser.Retreive<AsanaUser>(Assignee, auth);
 
             var task = new AsanaTask
             {
                 workspace = workspace,
-                projects = new[] { project },
-                assignee = assignee,
-                name = evt.Data.RenderedMessage.Substring(0,30),
-                notes = evt.Data.RenderedMessage,
+                projects = project != null ? new[] { project } : null,
+                assignee = assignee ?? null,
+                name = evt.Data.RenderedMessage,
+                notes = renderProperties(evt),
             };
 
             task.Create(auth);
+        }
+
+        private string renderProperties(Event<LogEventData> evt)
+        {
+            var props = evt.Data.Properties
+                .Select(s => string.Format("{0}: {1}", s.Key, s.Value));
+
+            return string.Join("\n", props);
         }
     }
 }

@@ -46,8 +46,10 @@ namespace Seq.App.Asana
             using (var cli = new HttpClient())
             {
                 cli.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.AccessToken);
+
                 var uri = string.Format("https://app.asana.com/api/1.0/{0}", endpoint);
 
+                //create object for serielization
                 var obj = new { data = this };
 
                 var jobj = JObject.FromObject(obj, new JsonSerializer { NullValueHandling = NullValueHandling.Ignore });
