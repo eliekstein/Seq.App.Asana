@@ -4,7 +4,7 @@
     {
         public override string id { get; set; }
         public override string endpoint { get { return "users"; } }
-        public string name { get; set; }
+        public override string name { get; set; }
         public string email { get; set; }
     }
 }

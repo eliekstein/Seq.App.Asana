@@ -7,7 +7,7 @@ namespace Seq.App.Asana
     {
         public override string id { get; set; }
         public AsanaUser assignee { get; set; }
-        public string name { get; set; }
+        public override string name { get; set; }
         public string notes { get; set; }
         [JsonConverter(typeof(IdOnlyConverter))]
         public IEnumerable<AsanaProject> projects { get; set; }

@@ -9,7 +9,7 @@ namespace Seq.App.Asana
     public class AsanaWorkspace : AsanaBaseObject<string>
     {
         public override string id { get; set; }
-        public string name { get; set; }
+        public override string name { get; set; }
         public bool is_organization { get; set; }
         public override string endpoint { get { return "workspaces"; } }
         public override string ToString()

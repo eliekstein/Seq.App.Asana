@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Seq.App.Asana;
 using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace Seq.App.Asana
 {
@@ -21,6 +25,7 @@ namespace Seq.App.Asana
         [JsonIgnore]
         public abstract string endpoint { get; }
         public abstract TId id { get; set; }
+        public virtual string name { get; set; }
         [JsonIgnore]
         public virtual Func<string,Type,object> JsonParse { get; set; }
 
@@ -39,6 +44,16 @@ namespace Seq.App.Asana
 
                 return jsonObj;
             }
+        }
+        public static AsanaBaseObject<TId> Retreive(Type ResourceType, TId id, Authentication authentication)
+        {
+            var methodResult = ResourceType
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                .Where(m => m.Name == nameof(Retreive))
+                .Single(mt => mt.IsGenericMethod)
+                .MakeGenericMethod(ResourceType)
+                .Invoke(null, new object[] { id, authentication });
+            return methodResult as AsanaBaseObject<TId>;
         }
 
         public void Create(Authentication authentication)
