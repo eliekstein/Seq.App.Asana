@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Seq.App.Asana;
+using Xunit;
 
 namespace Seq.App.Asana.Test
 {
