@@ -6,8 +6,6 @@ branches:
 
 clone_depth: 20
 
-configuration: Release
-
 before_build:
 - cmd: nuget restore
 
