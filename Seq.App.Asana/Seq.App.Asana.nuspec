@@ -1,7 +1,7 @@
 ﻿<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Seq.App.Asana</id>
-    <version>0.0.4</version>
+    <version>$version$</version>
     <authors>Eli Ekstein</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An app for Seq (http://getseq.net) that forwards messages to Asana.</description>
