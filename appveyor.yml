@@ -16,7 +16,7 @@ build:
   verbosity: minimal
  
 after_build:
-- cmd: nuget pack MyProject.nuspec -version "%APPVEYOR_BUILD_VERSION%"
+- cmd: nuget pack -version "%APPVEYOR_BUILD_VERSION%"
  
 artifacts:
 - path: 'Seq.App.Asana/*.nupkg'
