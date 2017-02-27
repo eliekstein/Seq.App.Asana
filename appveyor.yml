@@ -16,7 +16,11 @@ build:
   verbosity: minimal
  
 after_build:
+<<<<<<< HEAD
 - cmd: nuget pack Seq.App.Asana\Seq.App.Asana.csproj -version "%APPVEYOR_BUILD_VERSION%"
+=======
+- cmd: nuget pack Seq.App.Asana\Seq.App.Asana.csprj -version "%APPVEYOR_BUILD_VERSION%"
+>>>>>>> 5b0ea44b76f25db6ec4ce0acf3f77ee5b8746cbe
 
 artifacts:
 - path: 'Seq.App.Asana/*.nupkg'
