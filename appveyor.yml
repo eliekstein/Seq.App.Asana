@@ -17,7 +17,7 @@ after_build:
 - cmd: nuget pack Seq.App.Asana\Seq.App.Asana.csproj -version "%APPVEYOR_BUILD_VERSION%"
 
 artifacts:
-- path: 'Seq.App.Asana/*.nupkg'
+- path: '*.nupkg'
   name: nuget-package
   
 deploy:
